@@ -51,7 +51,7 @@ values."
      semantic
      gtags
      chrome
-     c-style)
+     xlctuz)
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -254,7 +254,7 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  )
+  (load-file ".spacemacs.d/layers/local/cdb-gud.el"))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -263,13 +263,23 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "C-x m") 'eshell)
   (global-set-key (kbd "C-x f") 'helm-recentf)
   (global-set-key (kbd "M-o") 'ff-find-other-file)
+  (global-set-key (kbd "C-x SPC") 'gud-break)
+
   (remove-hook 'eshell-mode-hook 'company-mode)
-  (add-hook 'projectile-mode-hook
-            (lambda ()
-              (local-set-key (kbd "<f5>") 'projectile-compile-project)
-              (local-set-key (kbd "<f6>") 'projectile-find-file)
-              (local-set-key (kbd "<f7>") 'projectile-recentf)
-              (local-set-key (kbd "<f8>") 'projectile-find-other-file)))
+  (add-hook 'eshell-mode-hook '(define-key eshell-mode-map
+                                 (kbd "C-d")
+                                 'delete-char))
+  (add-hook 'eshell-mode-hook '(define-key eshell-mode-map
+                                    (kbd "C-l")
+                                    'recenter-top-bottom))
+
+  (require 'gud)
+  (global-set-key (kbd "<f12>") 'gud-break)
+
+  ;; (add-hook 'c-mode-common-hook
+  ;;           (lambda ()
+  ;;             (local-set-key (kbd "C-c SPC") 'gud-break)))
+
   (add-hook 'markdown-mode-hook
             (setq markdown-command "markdown_py")))
 

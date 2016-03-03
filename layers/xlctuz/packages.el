@@ -1,4 +1,4 @@
-;;; packages.el --- c-style layer packages file for Spacemacs.
+;;; packages.el --- xlctuz layer packages file for Spacemacs.
 ;;
 ;; Copyright (c) 2012-2016 Sylvain Benner & Contributors
 ;;
@@ -18,22 +18,22 @@
 ;;
 ;;
 ;; Briefly, each package to be installed or configured by this layer should be
-;; added to `c-style-packages'. Then, for each package PACKAGE:
+;; added to `xlctuz-packages'. Then, for each package PACKAGE:
 ;;
 ;; - If PACKAGE is not referenced by any other Spacemacs layer, define a
-;;   function `c-style/init-PACKAGE' to load and initialize the package.
+;;   function `xlctuz/init-PACKAGE' to load and initialize the package.
 
 ;; - Otherwise, PACKAGE is already referenced by another Spacemacs layer, so
-;;   define the functions `c-style/pre-init-PACKAGE' and/or
-;;   `c-style/post-init-PACKAGE' to customize the package as it is loaded.
+;;   define the functions `xlctuz/pre-init-PACKAGE' and/or
+;;   `xlctuz/post-init-PACKAGE' to customize the package as it is loaded.
 
 ;;; Code:
 
-(defconst c-style-packages
+(defconst xlctuz-packages
   '(
     google-c-style
     )
-  "The list of Lisp packages required by the c-style layer.
+  "The list of Lisp packages required by the xlctuz layer.
 
 Each entry is either:
 
@@ -60,13 +60,13 @@ Each entry is either:
       - A list beginning with the symbol `recipe' is a melpa
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
 
-(defun c-style/init-google-c-style ()
+
+(defun xlctuz/init-google-c-style ()
   (use-package google-c-style
     :config
     (add-hook 'c-mode-common-hook (lambda ()
                                     (google-set-c-style)
                                     (setq c-basic-offset 4)))
     (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))))
-
 
 ;;; packages.el ends here

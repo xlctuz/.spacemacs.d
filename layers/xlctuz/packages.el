@@ -66,7 +66,8 @@ Each entry is either:
     :config
     (add-hook 'c-mode-common-hook (lambda ()
                                     (google-set-c-style)
-                                    (setq c-basic-offset 4)))
+                                    (setq c-basic-offset 4)
+                                    (setq tab-width 4)))
     (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))))
 
 ;;; packages.el ends here

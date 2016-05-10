@@ -31,7 +31,7 @@ values."
      org
      (shell :variables
             shell-default-height 30
-            shell-default-position 'full
+            shell-default-position 'bottom
             shell-default-shell 'eshell)
      ;; spell-checking
      syntax-checking
@@ -94,7 +94,7 @@ values."
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
-   dotspacemacs-editing-style 'emacs
+   dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -265,10 +265,10 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (global-set-key (kbd "C-x m") 'eshell)
-  (global-set-key (kbd "C-x f") 'helm-recentf)
-  (global-set-key (kbd "M-o") 'ff-find-other-file)
-  (global-set-key (kbd "C-x SPC") 'gud-break)
+  ;; (global-set-key (kbd "C-x m") 'eshell)
+  ;; (global-set-key (kbd "C-x f") 'helm-recentf)
+  ;; (global-set-key (kbd "M-o") 'ff-find-other-file)
+  ;; (global-set-key (kbd "C-x SPC") 'gud-break)
 
   (remove-hook 'eshell-mode-hook 'company-mode)
   (add-hook 'eshell-mode-hook '(define-key eshell-mode-map

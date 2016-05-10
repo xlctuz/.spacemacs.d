@@ -5,6 +5,9 @@
         ((string-equal type "int") "int")
         ((string-equal type "NM number") "NM_number")
         ((string-equal type "projection") "Projection")
+        ((string-equal type "exp") "double")
+        ((string-equal type "latitude") "Latitude")
+        ((string-equal type "longitude") "Longitude")
         (t "unknown")))
 
 ;; (reduce #'(lambda (l r)
@@ -26,8 +29,8 @@
         (apply #'list (subseq lst 0 (- (length lst) reserve)) (subseq lst (- (length lst) reserve)))
       lst)))
 
-(defun buffer->lines ()
-  (remove "" (split-string (buffer-substring-no-properties (point-min) (point-max)) "\n")))
+(defun buffer->lines (start end)
+  (remove "" (split-string (buffer-substring-no-properties start end) "\n")))
 
 (defun fix-type (words)
   (cond ((< (length words) 3) words)
@@ -47,7 +50,7 @@
   (fix-type (split-string line)))
 
 (defun preread-lines ()
-  (mapcar #'line->words (buffer->lines)))
+  (mapcar #'line->words (buffer->lines (point-min) (point-max))))
 
 (defun read-fields (lines)
   (mapcar #'(lambda (lst)
@@ -71,9 +74,9 @@
 (defun field->read-statement (field)
   (if (= (length field) 3)
       (if (string-equal (field-length field) "0-500")
-          (format "%s = text_read_to_delimiter(reader, \"\\x0B\\x0D\\x0A\");"
+          (format "%s = hcrf_read_to_delimiter(reader, \"\\x0B\\x0D\\x0A\");"
                   (field-name field))
-        (format "%s = text_read_%s(reader, %s);"
+        (format "%s = hcrf_read_%s(reader, %s);"
                 (field-name field)
                 (to-name (split-string (field-type field)))
                 (field-length field)))
@@ -97,31 +100,49 @@
                        (concat l "\n" r))
                    lst))))
 
+
+(defun make-debug-type ()
+  (let* ((temp (mapcar #'split-string (buffer->lines (region-beginning) (region-end))))
+         (name (cadr (car temp)))
+         (fields (mapcar
+                  #'(lambda (field)
+                      (subseq field 0 (- (length field) 1)))
+                  (mapcar #'cadr (subseq temp 2 (- (length temp) 1))))))
+
+    (concat
+     (format "template<>\n")
+     (format "ostream& debug_type(ostream&ostr, int indent, const %s& val)\n" name)
+     (format "{\n")
+     (format "    ostr << endl;\n")
+     (reduce #'concat (mapcar #'(lambda (field)
+                                  (concat (format "    write_space(ostr, indent) << \"%s: \";\n" field)
+                                          (format "    debug_type(ostr, indent+2, val.%s);\n" field)
+                                          (format "    ostr << endl;\n" field)))
+                              fields))
+     (format "    return ostr;\n")
+     (format "}\n"))))
+
+(defun debug-type ()
+  (let ((str (make-debug-type)))
+    (kill-new str)))
+
 (defun hcrfdef->cdef ()
   (let* ((lines (preread-lines))
          (name (to-name (car lines)))
          (fields (remove nil (read-fields (cdr lines)))))
-    (end-of-buffer)
-    (insert "\n")
-    (insert (format "struct %s\n{\n"  (capitalize name)))
-    (insert (format-lines (mapcar #'(lambda (field)
-                                      (concat "    " (field->cfield field)))
-                                  fields)))
-    (insert (format "\n};\n\n"))
-    (insert (format "%s parse_%s(Text_reader reader)\n"  (capitalize name) name))
-    (insert "{\n")
-    (insert (format "    %s ret;\n" (capitalize name)))
-    (insert (format-lines (mapcar #'(lambda (field)
-                                      (concat "    ret." (field->read-statement field)))
-                                  fields)))
-    (insert "\n    return ret;\n}\n")))
-
-
-(defun make-debug-type (defination)
-  )
-
-(defun debug-type ()
-  (let ((str (buffer-substring-no-properties (region-beginning) (region-end))))
-    (message str)
     (with-output-to-temp-buffer "*temp*"
-      (princ str))))
+      (let ((str (concat "\n"
+                         (format "struct %s\n{\n"  (capitalize name))
+                         (format-lines (mapcar #'(lambda (field)
+                                                   (concat "    " (field->cfield field)))
+                                               fields))
+                         (format "\n};\n\n")
+                         (format "%s parse_%s(Hcrf_reader reader)\n"  (capitalize name) name)
+                         "{\n"
+                         (format "    %s ret;\n" (capitalize name))
+                         (format-lines (mapcar #'(lambda (field)
+                                                   (concat "    ret." (field->read-statement field)))
+                                               fields))
+                         "\n    return ret;\n}\n")))
+        (kill-new str)
+        (princ str)))))

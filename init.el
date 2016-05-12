@@ -284,8 +284,8 @@ layers configuration. You are free to put any user code."
                                  (kbd "C-d")
                                  'delete-char))
   (add-hook 'eshell-mode-hook '(define-key eshell-mode-map
-                                    (kbd "C-l")
-                                    'recenter-top-bottom))
+                                 (kbd "C-l")
+                                 'recenter-top-bottom))
   (require 'gud)
   (global-set-key (kbd "<f12>") 'gud-break)
 
@@ -309,8 +309,11 @@ layers configuration. You are free to put any user code."
   ;; (defalias 'evil-insert-state 'evil-emacs-state)
   (evil-define-key 'insert global-map (kbd "C-a") 'spacemacs/smart-move-beginning-of-line)
   (evil-define-key 'insert global-map (kbd "C-e") 'move-end-of-line)
+  (evil-define-key 'insert global-map (kbd "C-k") 'kill-line)
+  (evil-define-key 'insert global-map (kbd "C-y") 'yank)
+  (evil-define-key 'insert global-map (kbd "C-n") 'next-line)
+  (evil-define-key 'insert global-map (kbd "C-p") 'previous-line)
   )
-
 
 
 ;; Do not write anything past this comment. This is where Emacs will

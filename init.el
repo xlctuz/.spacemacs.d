@@ -36,8 +36,8 @@ values."
      ;; spell-checking
      syntax-checking
      version-control
-     rust
-     go
+     ;; rust
+     ;; go
      scheme
      common-lisp
      html
@@ -52,7 +52,7 @@ values."
      gtags
      chrome
      xlctuz
-     graphviz
+     ;; graphviz
      ;; evernote
      ;; emoji
      ;; games
@@ -286,7 +286,11 @@ layers configuration. You are free to put any user code."
   ;;             (local-set-key (kbd "C-c SPC") 'gud-break)))
 
   (add-hook 'markdown-mode-hook
-            (setq markdown-command "markdown_py")))
+            (setq markdown-command "markdown_py"))
+  (add-hook 'slime-mode-hook '(define-key slime-mode-hook
+                                (kbd "M-.")
+                                'slime-edit-definition))
+  )
 
 
 

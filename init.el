@@ -49,11 +49,14 @@ values."
      windows-scripts
      racket
      c-c++
-     chinese
+     (chinese :variables chinese-default-input-method 'wubi)
      semantic
      gtags
      chrome
      xlctuz
+     javascript
+     clojure
+     java
      ;; graphviz
      ;; evernote
      ;; emoji
@@ -96,7 +99,7 @@ values."
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
-   dotspacemacs-editing-style 'emacs
+   dotspacemacs-editing-style 'vim
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -289,6 +292,11 @@ layers configuration. You are free to put any user code."
 
   (add-hook 'markdown-mode-hook
             (setq markdown-command "markdown_py"))
+  (setq eclim-eclipse-dirs "d:/java-mars/eclipse"
+        eclim-executable "d:/java-mars/eclipse/eclim_2.5.0.jar")
+  (setq web-mode-enable-auto-expanding t)
+  (setq eshell-last-dir-ring-size 16)
+  (setq deft-extensions '("org" "md" "txt"))
   )
 
 
@@ -305,7 +313,12 @@ layers configuration. You are free to put any user code."
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" default)))
  '(package-selected-packages
    (quote
-    (zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacegray-theme soothe-theme engine-mode restclient evil-snipe evil-cleverparens paredit zeal-at-point helm-dash deft graphviz-dot-mode smooth-scroll rtm geeknote ag 2048-game google-c-style cursor-chg wpuzzle yaml-mode web-mode tagedit sql-indent slime slim-mode scss-mode sass-mode racket-mode pyvenv pytest pyenv-mode powershell pip-requirements less-css-mode jade-mode hy-mode helm-pydoc helm-css-scss haml-mode gmail-message-mode bracketed-paste xterm-color toml-mode stickyfunc-enhance srefactor shell-pop racer pangu-spacing multi-term mmm-mode markdown-toc markdown-mode helm-gtags helm-flyspell go-eldoc gh-md ggtags flycheck-rust flycheck-pos-tip flycheck find-by-pinyin-dired eshell-prompt-extras esh-help disaster company-racer company-go company-c-headers cmake-mode clang-format chinese-pyim auto-dictionary ace-pinyin with-editor solarized-theme toc-org smeargle orgit org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe+ git-gutter-fringe git-gutter+ git-gutter git-commit evil-magit diff-hl company-statistics company-quickhelp company auto-yasnippet ac-ispell magit geiser ws-butler window-numbering volatile-highlights vi-tilde-fringe spaceline smooth-scrolling restart-emacs rainbow-delimiters popwin popup persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-jumper evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line quelpa package-build use-package which-key bind-key bind-map evil spacemacs-theme))))
+    (chinese-wbim emacs-eclim clj-refactor inflections edn peg cider-eval-sexp-fu cider queue clojure-mode impatient-mode skewer-mode simple-httpd web-beautify json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacegray-theme soothe-theme engine-mode restclient evil-snipe evil-cleverparens paredit zeal-at-point helm-dash deft graphviz-dot-mode smooth-scroll rtm geeknote ag 2048-game google-c-style cursor-chg wpuzzle yaml-mode web-mode tagedit sql-indent slime slim-mode scss-mode sass-mode racket-mode pyvenv pytest pyenv-mode powershell pip-requirements less-css-mode jade-mode hy-mode helm-pydoc helm-css-scss haml-mode gmail-message-mode bracketed-paste xterm-color toml-mode stickyfunc-enhance srefactor shell-pop racer pangu-spacing multi-term mmm-mode markdown-toc markdown-mode helm-gtags helm-flyspell go-eldoc gh-md ggtags flycheck-rust flycheck-pos-tip flycheck find-by-pinyin-dired eshell-prompt-extras esh-help disaster company-racer company-go company-c-headers cmake-mode clang-format chinese-pyim auto-dictionary ace-pinyin with-editor solarized-theme toc-org smeargle orgit org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe+ git-gutter-fringe git-gutter+ git-gutter git-commit evil-magit diff-hl company-statistics company-quickhelp company auto-yasnippet ac-ispell magit geiser ws-butler window-numbering volatile-highlights vi-tilde-fringe spaceline smooth-scrolling restart-emacs rainbow-delimiters popwin popup persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-jumper evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line quelpa package-build use-package which-key bind-key bind-map evil spacemacs-theme)))
+ '(sql-postgres-login-params
+   (quote
+    ((user :default "liuhuicong")
+     server
+     (database :default "liuhuicong")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

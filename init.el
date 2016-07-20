@@ -132,8 +132,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("YaHei Consolas Hybrid"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -297,6 +297,8 @@ layers configuration. You are free to put any user code."
   (setq web-mode-enable-auto-expanding t)
   (setq eshell-last-dir-ring-size 16)
   (setq deft-extensions '("org" "md" "txt"))
+  (setq deft-recursive t)
+  (setq deft-recursive-ignore-dir-regexp "^\.*$")
   )
 
 

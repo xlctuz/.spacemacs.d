@@ -256,7 +256,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup 'all
+   dotspacemacs-whitespace-cleanup 'nil
    ))
 
 (defun dotspacemacs/user-init ()
@@ -298,7 +298,8 @@ layers configuration. You are free to put any user code."
   (setq eshell-last-dir-ring-size 16)
   (setq deft-extensions '("org" "md" "txt"))
   (setq deft-recursive t)
-  (setq deft-recursive-ignore-dir-regexp "^\.*$")
+  (setq deft-recursive-ignore-dir-regexp "\\(?:\\.\\|\\.\\.\\|\\.sync\\)$")
+  (setq deft-use-filter-string-for-filename t)
   )
 
 
